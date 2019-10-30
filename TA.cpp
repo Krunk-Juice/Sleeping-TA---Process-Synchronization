@@ -13,18 +13,24 @@ pthread_t TA;				//Separate Thread for TA.
 int ChairsCount = 0;
 int CurrentIndex = 0;
 
-/*TODO
+/*COMPLETE
  
 //Declaration of Semaphores and Mutex Lock.
 //Semaphores used:
-//A semaphore to signal and wait TA's sleep.
+//A semaphore to signal and wait TA's sleep. */
+sem_t sem_TAsleep;
+
 //An array of 3 semaphores to signal and wait chair to wait for the TA.
+sem_t chairs[3];
+
 //A semaphore to signal and wait for TA's next student.
+sem_t sem_nextStudent;
  
  //Mutex Lock used:
 //To lock and unlock variable ChairsCount to increment and decrement its value.
- 
- //hint: use sem_t and pthread_mutex_t
+pthread_mutex_t mutex;
+
+ /* //hint: use sem_t and pthread_mutex_t
  
  
  */

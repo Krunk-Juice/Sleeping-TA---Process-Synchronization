@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
 	//and Semaphores.
 	sem_init(&sem_TAsleep, 0, 0);
 	sem_init(&sem_nextStudent, 0, 0);
-	for (int i = 0; i < 3; i++)
-		sem_init(&sem_chairs[i], 0, 0);
+	for (id = 0; id < 3; id++)
+		sem_init(&sem_chairs[id], 0, 0);
 
 	/* //hint: use sem_init() and pthread_mutex_init()
      */
@@ -77,15 +77,15 @@ int main(int argc, char *argv[])
      //hint: use pthread_create */
 	pthread_create(&TA, NULL, TA_Activity, NULL);
 
-	for (int i = 0; i < number_of_students; i++)
-		pthread_create(&Students[i], NULL, Student_Activity, (void *)i);
+	for (id = 0; id < number_of_students; id++)
+		pthread_create(&Students[id], NULL, Student_Activity, (void *) id);
 
 	//Waiting for TA thread and N Student threads.
 	//hint: use pthread_join
 	pthread_join(TA, NULL);
 
-	for (int i = 0; i < number_of_students; i++)
-		pthread_join(Students[i], NULL);
+	for (id = 0; id < number_of_students; id++)
+		pthread_join(Students[id], NULL);
 
 	/* */
 

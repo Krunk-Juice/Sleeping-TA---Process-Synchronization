@@ -100,18 +100,34 @@ int main(int argc, char* argv[])
 void *TA_Activity()
 {
     /*TODO
+
 	//TA is currently sleeping. */
+	sem_wait(&sem_TAsleep);
+
 	while (1) {
 
     // lock
+	pthread_mutex_lock(&mutex);
     
+	/** CRITICAL SECTION: Modifyinf ChairsCount & CurrentIndex, until unlock **/
     //if chairs are empty, break the loop.
+	if (ChairsCount == 0) {
+		pthread_mutex_unlock(&mutex);
+		break;
+	}
 
 	//TA gets next student on chair.
+	sem_post(&sem_chairs[CurrentIndex]);
+	ChairsCount--;
+	CurrentIndex = (CurrentIndex + 1) % 3;
+	printf("%d chairs remain, because, student left their chair for the TA room.\n", 3 - ChairsCount);
 
     //unlock
+	pthread_mutex_unlock(&mutex);
 
 	//TA is currently helping the student
+	printf("TA is currently helping the student.\n");
+	sem_post(&sem_nextStudent);
      
      //hint: use sem_wait(); sem_post(); pthread_mutex_lock(); pthread_mutex_unlock()
 	}
@@ -139,6 +155,7 @@ void *Student_Activity(void *threadID)
     // lock
 	pthread_mutex_lock(&mutex);
     
+	/** CRITICAL SECTION: Modifying ChairsCount, until unlock **/
 	ChairsCount++;
 	printf("Student sat down, %d chairs remaining.\n", 3 - ChairsCount);
 

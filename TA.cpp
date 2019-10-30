@@ -47,12 +47,17 @@ int main(int argc, char* argv[])
 	int id;
 	srand(time(NULL));
 
-    /*TODO
-	//Initializing Mutex Lock and Semaphores.
+    /*COMPLETE
+	//Initializing Mutex Lock */
+	pthread_mutex_init(&mutex, NULL);
 	
-     //hint: use sem_init() and pthread_mutex_init()
-     
+	//and Semaphores.
+	sem_init(&sem_TAsleep, 0, 0);
+	sem_init(&sem_nextStudent, 0, 0);
+
+    /* //hint: use sem_init() and pthread_mutex_init()
      */
+
 	
 	if(argc<2)
 	{

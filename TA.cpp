@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 	pthread_create(&TA, NULL, TA_Activity, NULL);
 
 	for (id = 0; id < number_of_students; id++)
-		pthread_create(&Students[id], NULL, Student_Activity, (void *) id);
+		pthread_create(&Students[id], NULL, Student_Activity, (void *) (long)id);
 
 	//Waiting for TA thread and N Student threads.
 	//hint: use pthread_join

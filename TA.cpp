@@ -36,7 +36,7 @@ pthread_mutex_t mutex;
  */
 
 //Declared Functions
-void *TA_Activity();
+void *TA_Activity(void*);
 void *Student_Activity(void *threadID);
 
 int main(int argc, char *argv[])
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void *TA_Activity()
+void *TA_Activity(void* threadID)
 {
 	/*TODO
 

@@ -2,7 +2,7 @@
 all:	TA
 
 TA:	TA.o
-	g++ TA.o -o TA
+	g++ TA.o -o TA -lpthread
 
 TA.o:
 	g++ -c TA.cpp

@@ -75,12 +75,17 @@ int main(int argc, char* argv[])
 
     /*TODO
 	//Creating one TA thread and N Student threads.
-     //hint: use pthread_create
+     //hint: use pthread_create */
+	pthread_create(&TA, NULL, TA_Activity, NULL);
+	
+	for (int i = 0; i < number_of_students; i++) {
+		pthread_create(&Students[i], NULL, Student_Activity, (void *) i);
+	}
 
 	//Waiting for TA thread and N Student threads.
      //hint: use pthread_join
      
-     */
+    /* */
 
 	//Free allocated memory
 	free(Students); 

@@ -84,6 +84,11 @@ int main(int argc, char* argv[])
 
 	//Waiting for TA thread and N Student threads.
      //hint: use pthread_join
+	pthread_join(TA, NULL);
+	
+	for (int i = 0; i < number_of_students; i++) {
+		pthread_join(Students[i], NULL);
+	}
      
     /* */
 

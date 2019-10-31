@@ -21,7 +21,7 @@ int CurrentIndex = 0;
 sem_t sem_TAsleep;
 
 //An array of 3 semaphores to signal and wait chair to wait for the TA.
-sem_t sem_chairs[3];
+int sem_chairs[3];
 
 //A semaphore to signal and wait for TA's next student.
 sem_t sem_nextStudent;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 	sem_init(&sem_TAsleep, 0, 1);
 	sem_init(&sem_nextStudent, 0, 0);
 	for (id = 0; id < 3; id++)
-		sem_init(&sem_chairs[id], 0, 0);
+		sem_chairs[id] = 0;
 
 	/* //hint: use sem_init() and pthread_mutex_init()
      */
@@ -115,7 +115,7 @@ void *TA_Activity(void* threadID)
 		}
 
 		//TA gets next student on chair.
-		sem_wait(&sem_chairs[CurrentIndex]);
+		sem_chairs[CurrentIndex] = 0;
 		printf("[TA] TA is teaching student %d,\n"
 			"\tfrom Chair %d.\n", 
 			sem_chairs[CurrentIndex], CurrentIndex);
@@ -159,6 +159,7 @@ void *Student_Activity(void *threadID)
 		//Student tried to sit on a chair.
 		if (ChairsCount < 3)
 		{
+			sem_chairs[CurrentIndex] = (long)threadID;
 
 			//wake up the TA.
 			sem_wait(&sem_TAsleep);
@@ -182,7 +183,7 @@ void *Student_Activity(void *threadID)
 			pthread_mutex_unlock(&mutex);
 
 			//Student leaves his/her chair.
-			sem_post(&sem_chairs[(CurrentIndex + ChairsCount - 1) % 3]);
+			CurrentIndex = (CurrentIndex + 1) % 3;
 
 			//Student  is getting help from the TA
 			printf("[Student] Student %ld is getting help from the TA.\n", (long)threadID);

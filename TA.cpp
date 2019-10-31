@@ -115,21 +115,23 @@ void *TA_Activity(void* threadID)
 		}
 
 		//TA gets next student on chair.
+
 		sem_chairs[CurrentIndex] = 0;
-		printf("[TA] TA is teaching student %d,\n"
-			"\tfrom Chair %d.\n", 
-			sem_chairs[CurrentIndex], CurrentIndex);
+		// printf("[TA] TA is teaching student %d,\n"
+		// 	"\tfrom Chair %d.\n", 
+		// 	sem_chairs[CurrentIndex], CurrentIndex);
 		ChairsCount--;
 		CurrentIndex = (CurrentIndex + 1) % 3;
 
-		sleep(rand() % 5 + 1);
+		int help = rand() % 5 + 1;
+		sleep(help);
 
 		//printf("%d chairs remain, because student left their chair for the TA room.\n", 3 - ChairsCount);
-		// printf("[TA] Students waiting:\t"
-		// 	"[Chair 0] = %d\t"
-		// 	"[Chair 1] = %d\t"
-		// 	"[Chair 2] = %d\n",
-		// 	sem_chairs[0], sem_chairs[1], sem_chairs[2]);
+		printf("[TA] Students waiting:\n"
+			"\t[Chair 0] = %d"
+			"\t[Chair 1] = %d"
+			"\t[Chair 2] = %d\n",
+			sem_chairs[0], sem_chairs[1], sem_chairs[2]);
 
 		//unlock
 		pthread_mutex_unlock(&mutex);
@@ -154,12 +156,14 @@ void *Student_Activity(void *threadID)
 
 	while (1)
 	{
-		sleep(rand() % 5 + 1);
+		int arrive = rand() % 5 + 1;
+		sleep(arrive);
 
 		//Student tried to sit on a chair.
 		if (ChairsCount < 3)
 		{
 			sem_chairs[CurrentIndex] = (long)threadID;
+			ChairsCount++;
 
 			//wake up the TA.
 			sem_wait(&sem_TAsleep);
@@ -167,23 +171,23 @@ void *Student_Activity(void *threadID)
 			// lock
 			pthread_mutex_lock(&mutex);
 
-			/** CRITICAL SECTION: Modifying ChairsCount, until unlock **/
-			ChairsCount++;
-			printf("[Student] Student %ld sat down in waiting chair,\t"
-				"%d chairs remaining.\n",
+			printf("[Student] Student %ld sat down in waiting chair,\n"
+				"\t%d chairs remaining.\n",
 				(long)threadID, 3 - ChairsCount);
 
-			printf("[Student] Students waiting:\t"
-				"[Chair 0] = %d\t"
-				"[Chair 1] = %d\t"
-				"[Chair 2] = %d\n",
+			printf("[Student] Students waiting:\n"
+				"\t[Chair 0] = %d"
+				"\t[Chair 1] = %d"
+				"\t[Chair 2] = %d\n",
 				sem_chairs[0], sem_chairs[1], sem_chairs[2]);
+				
+			CurrentIndex = (CurrentIndex + 1) % 3;
 
 			// unlock
 			pthread_mutex_unlock(&mutex);
 
 			//Student leaves his/her chair.
-			CurrentIndex = (CurrentIndex + 1) % 3;
+			
 
 			//Student  is getting help from the TA
 			printf("[Student] Student %ld is getting help from the TA.\n", (long)threadID);

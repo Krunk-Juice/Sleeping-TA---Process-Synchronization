@@ -162,8 +162,6 @@ void *Student_Activity(void *threadID)
 		//Student tried to sit on a chair.
 		if (ChairsCount < 3)
 		{
-			sem_chairs[CurrentIndex] = (long)threadID;
-			ChairsCount++;
 
 			//wake up the TA.
 			sem_wait(&sem_TAsleep);
@@ -171,8 +169,11 @@ void *Student_Activity(void *threadID)
 			// lock
 			pthread_mutex_lock(&mutex);
 
-			printf("[Student] Student %ld sat down in waiting chair,\n"
-				"\t%d chairs remaining.\n",
+			sem_chairs[CurrentIndex] = (long)threadID;
+			ChairsCount++;
+
+			printf("[Student] Student %ld sat down in waiting chair, "
+				"%d chairs remaining.\n",
 				(long)threadID, 3 - ChairsCount);
 
 			printf("[Student] Students waiting:\n"
@@ -180,7 +181,7 @@ void *Student_Activity(void *threadID)
 				"\t[Chair 1] = %d"
 				"\t[Chair 2] = %d\n",
 				sem_chairs[0], sem_chairs[1], sem_chairs[2]);
-				
+
 			CurrentIndex = (CurrentIndex + 1) % 3;
 
 			// unlock

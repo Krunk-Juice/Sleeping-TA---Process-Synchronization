@@ -116,15 +116,20 @@ void *TA_Activity(void* threadID)
 
 		//TA gets next student on chair.
 		sem_wait(&sem_chairs[CurrentIndex]);
-		//printf("TA is teaching student %ld.\n", (long)threadID);
+		printf("[TA] TA is teaching student %d,\n"
+			"\tfrom Chair %d.\n", 
+			sem_chairs[CurrentIndex], CurrentIndex);
 		ChairsCount--;
 		CurrentIndex = (CurrentIndex + 1) % 3;
+
+		sleep(rand() % 5 + 1);
+
 		//printf("%d chairs remain, because student left their chair for the TA room.\n", 3 - ChairsCount);
-		printf("[TA] Students waiting:\t"
-			"[Chair 0] = %d\t"
-			"[Chair 1] = %d\t"
-			"[Chair 2] = %d\n",
-			sem_chairs[0], sem_chairs[1], sem_chairs[2]);
+		// printf("[TA] Students waiting:\t"
+		// 	"[Chair 0] = %d\t"
+		// 	"[Chair 1] = %d\t"
+		// 	"[Chair 2] = %d\n",
+		// 	sem_chairs[0], sem_chairs[1], sem_chairs[2]);
 
 		//unlock
 		pthread_mutex_unlock(&mutex);

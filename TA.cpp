@@ -11,7 +11,8 @@ pthread_t *Students; //N threads running as Students.
 pthread_t TA;		 //Separate Thread for TA.
 
 int ChairsCount = 0;
-int CurrentIndex = 0;
+int CurrentSeat = 0;
+int TeachSeat = 0;
 
 /*COMPLETE
  
@@ -100,6 +101,7 @@ void *TA_Activity(void* threadID)
 	
 	while (1)
 	{
+		if (ChairsCount > 0) {
 		//TA is currently sleeping.
 		sem_wait(&sem_nextStudent);
 
@@ -108,20 +110,22 @@ void *TA_Activity(void* threadID)
 
 		/** CRITICAL SECTION: Modifying ChairsCount & CurrentIndex, until unlock **/
 		//if chairs are empty, break the loop.
-		if (ChairsCount == 0)
-		{
-			pthread_mutex_unlock(&mutex);
-			break;
-		}
+		// if (ChairsCount == 0)
+		// {
+		// 	printf("No students need help. TA sleeping.\n");
+		// 	pthread_mutex_unlock(&mutex);
+		// 	break;
+		// }
 
 		//TA gets next student on chair.
+		sem_chairs[TeachSeat] = 0;
 
-		sem_chairs[CurrentIndex] = 0;
 		// printf("[TA] TA is teaching student %d,\n"
 		// 	"\tfrom Chair %d.\n", 
 		// 	sem_chairs[CurrentIndex], CurrentIndex);
 		ChairsCount--;
-		CurrentIndex = (CurrentIndex + 1) % 3;
+
+		TeachSeat = (TeachSeat + 1) % 3;
 
 		int help = rand() % 5 + 1;
 		sleep(help);
@@ -141,7 +145,11 @@ void *TA_Activity(void* threadID)
 		//printf("TA is currently helping the student.\n");
 
 		sem_post(&sem_TAsleep);
+		}
+		else
+			printf("No students need help. TA sleeping.\n");
 
+		printf("ChairsCount = %d\n", ChairsCount);
 		//hint: use sem_wait(); sem_post(); pthread_mutex_lock(); pthread_mutex_unlock()
 	}
 	/**/
@@ -152,7 +160,8 @@ void *Student_Activity(void *threadID)
 	/*TODO
     
 	//Student needs help from the TA */
-	printf("[Student] Student %ld needs help from the TA.\n", (long)threadID);
+	printf("[Student] Student %ld will eventually need help from the TA.\n", (long)threadID);
+	printf("TA is sleeping.\n");
 
 	while (1)
 	{
@@ -169,7 +178,7 @@ void *Student_Activity(void *threadID)
 			// lock
 			pthread_mutex_lock(&mutex);
 
-			sem_chairs[CurrentIndex] = (long)threadID;
+			sem_chairs[CurrentSeat] = (long)threadID;
 			ChairsCount++;
 
 			printf("[Student] Student %ld sat down in waiting chair, "
@@ -182,7 +191,7 @@ void *Student_Activity(void *threadID)
 				"\t[Chair 2] = %d\n",
 				sem_chairs[0], sem_chairs[1], sem_chairs[2]);
 
-			CurrentIndex = (CurrentIndex + 1) % 3;
+			CurrentSeat = (CurrentSeat + 1) % 3;
 
 			// unlock
 			pthread_mutex_unlock(&mutex);

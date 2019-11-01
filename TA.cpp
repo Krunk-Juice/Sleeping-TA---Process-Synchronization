@@ -32,9 +32,9 @@ sem_t sem_nextStudent;
 pthread_mutex_t mutex;
 
 /* //hint: use sem_t and pthread_mutex_t
- 
- 
  */
+
+bool sleep_ = true;	// to prevent multiple prints.
 
 //Declared Functions
 void *TA_Activity(void*);
@@ -103,19 +103,13 @@ void *TA_Activity(void* threadID)
 	{
 		if (ChairsCount > 0) {
 		//TA is currently sleeping.
+		sleep_ = false;
 		sem_wait(&sem_nextStudent);
 
 		// lock
 		pthread_mutex_lock(&mutex);
 
-		/** CRITICAL SECTION: Modifying ChairsCount & CurrentIndex, until unlock **/
 		//if chairs are empty, break the loop.
-		// if (ChairsCount == 0)
-		// {
-		// 	printf("No students need help. TA sleeping.\n");
-		// 	pthread_mutex_unlock(&mutex);
-		// 	break;
-		// }
 
 		//TA gets next student on chair.
 		printf("[TA] TA is teaching student %d, from Chair %d.\n", 
@@ -150,7 +144,10 @@ void *TA_Activity(void* threadID)
 
 		sem_post(&sem_TAsleep);
 		}
-
+		else if (ChairsCount == 0 && !sleep_) {
+			printf("[TA] No student needs help.\n\tAll chairs are empty.\n\tTA is sleeping.\n");
+			sleep_ = true;
+		}
 		// printf("ChairsCount = %d\n", ChairsCount);
 
 		//hint: use sem_wait(); sem_post(); pthread_mutex_lock(); pthread_mutex_unlock()

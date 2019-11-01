@@ -118,11 +118,13 @@ void *TA_Activity(void* threadID)
 		// }
 
 		//TA gets next student on chair.
-		sem_chairs[TeachSeat] = 0;
+		printf("[TA] TA is teaching student %d, from Chair %d.\n", 
+			sem_chairs[TeachSeat], TeachSeat);
+		
+		int tempStudent = sem_chairs[TeachSeat];
 
-		// printf("[TA] TA is teaching student %d,\n"
-		// 	"\tfrom Chair %d.\n", 
-		// 	sem_chairs[CurrentIndex], CurrentIndex);
+		sem_chairs[TeachSeat] = 0;
+			
 		ChairsCount--;
 
 		TeachSeat = (TeachSeat + 1) % 3;
@@ -130,15 +132,14 @@ void *TA_Activity(void* threadID)
 		int help = rand() % 10 + 1;
 		sleep(help);
 
-		//printf("%d chairs remain, because student left their chair for the TA room.\n", 3 - ChairsCount);
+		printf("[Student] Student %d left TA room.\n", tempStudent);
+
 		printf("[TA] Students waiting:\n"
-			"\t[Chair 0] = %d"
-			"\t[Chair 1] = %d"
-			"\t[Chair 2] = %d\n",
+			"\t    [Chair 0]\t    [Chair 1]\t    [Chair 2]\n"
+			"\t\t%d\t\t%d\t\t%d\n",
 			sem_chairs[0], sem_chairs[1], sem_chairs[2]);
 
-		if (ChairsCount == 0)
-			printf("[TA] No students need help. TA sleeping.\n");
+		//printf("%d chairs remain, because student left their chair for the TA room.\n", 3 - ChairsCount);
 
 		//unlock
 		pthread_mutex_unlock(&mutex);
@@ -163,7 +164,6 @@ void *Student_Activity(void *threadID)
     
 	//Student needs help from the TA */
 	printf("[Student] Student %ld will eventually need help from the TA.\n", (long)threadID);
-	printf("TA is sleeping.\n");
 
 	while (1)
 	{
@@ -190,9 +190,8 @@ void *Student_Activity(void *threadID)
 				(long)threadID, 3 - ChairsCount);
 
 			printf("[Student] Students waiting:\n"
-				"\t[Chair 0] = %d"
-				"\t[Chair 1] = %d"
-				"\t[Chair 2] = %d\n",
+				"\t    [Chair 0]\t    [Chair 1]\t    [Chair 2]\n"
+				"\t\t%d\t\t%d\t\t%d\n",
 				sem_chairs[0], sem_chairs[1], sem_chairs[2]);
 
 			CurrentSeat = (CurrentSeat + 1) % 3;
@@ -204,7 +203,7 @@ void *Student_Activity(void *threadID)
 			
 
 			//Student  is getting help from the TA
-			printf("[Student] Student %ld is getting help from the TA.\n", (long)threadID);
+			// printf("[Student] Student %ld is getting help from the TA.\n", (long)threadID);
 
 			//Student waits to go next.
 			sem_post(&sem_nextStudent);
@@ -212,7 +211,7 @@ void *Student_Activity(void *threadID)
 			sem_wait(&sem_TAsleep);
 
 			//Student left TA room
-			printf("[Student] Student %ld left TA room.\n", (long)threadID);
+			// printf("[Student] Student %ld left TA room.\n", (long)threadID);
 		}
 		else
 		{

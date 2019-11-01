@@ -11,8 +11,8 @@ pthread_t *Students; //N threads running as Students.
 pthread_t TA;		 //Separate Thread for TA.
 
 int ChairsCount = 0;
-int CurrentSeat = 0;
-int TeachSeat = 0;
+int CurrentSeat = 3 - 1;
+int TeachSeat = 3 - 1;
 
 /*COMPLETE
  
@@ -126,7 +126,7 @@ void *TA_Activity(void* threadID)
 		int help = rand() % 10 + 1;
 		sleep(help);
 
-		printf("[Student] Student %d left TA room.\n", tempStudent);
+		printf("[TA] Student %d left TA room.\n", tempStudent);
 
 		printf("[TA] Students waiting:\n"
 			"\t    [Chair 0]\t    [Chair 1]\t    [Chair 2]\n"
@@ -182,9 +182,9 @@ void *Student_Activity(void *threadID)
 			sem_chairs[CurrentSeat] = (long)threadID;
 			ChairsCount++;
 
-			printf("[Student] Student %ld sat down in waiting chair, "
+			printf("[Student] Student %ld sat down in Chair %d, "
 				"%d chairs remaining.\n",
-				(long)threadID, 3 - ChairsCount);
+				(long)threadID, CurrentSeat, 3 - ChairsCount);
 
 			printf("[Student] Students waiting:\n"
 				"\t    [Chair 0]\t    [Chair 1]\t    [Chair 2]\n"

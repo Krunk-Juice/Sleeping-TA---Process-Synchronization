@@ -127,7 +127,7 @@ void *TA_Activity(void* threadID)
 
 		TeachSeat = (TeachSeat + 1) % 3;
 
-		int help = rand() % 5 + 1;
+		int help = rand() % 10 + 1;
 		sleep(help);
 
 		//printf("%d chairs remain, because student left their chair for the TA room.\n", 3 - ChairsCount);
@@ -136,6 +136,9 @@ void *TA_Activity(void* threadID)
 			"\t[Chair 1] = %d"
 			"\t[Chair 2] = %d\n",
 			sem_chairs[0], sem_chairs[1], sem_chairs[2]);
+
+		if (ChairsCount == 0)
+			printf("[TA] No students need help. TA sleeping.\n");
 
 		//unlock
 		pthread_mutex_unlock(&mutex);
@@ -146,10 +149,9 @@ void *TA_Activity(void* threadID)
 
 		sem_post(&sem_TAsleep);
 		}
-		else
-			printf("No students need help. TA sleeping.\n");
 
-		printf("ChairsCount = %d\n", ChairsCount);
+		// printf("ChairsCount = %d\n", ChairsCount);
+
 		//hint: use sem_wait(); sem_post(); pthread_mutex_lock(); pthread_mutex_unlock()
 	}
 	/**/

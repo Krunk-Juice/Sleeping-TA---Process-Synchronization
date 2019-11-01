@@ -170,15 +170,17 @@ void *Student_Activity(void *threadID)
 		int arrive = rand() % 5 + 1;
 		sleep(arrive);
 
+		pthread_mutex_lock(&mutex);
+
 		//Student tried to sit on a chair.
 		if (ChairsCount < 3)
 		{
 
 			//wake up the TA.
-			sem_wait(&sem_TAsleep);
+			// sem_wait(&sem_TAsleep);
 
 			// lock
-			pthread_mutex_lock(&mutex);
+			// pthread_mutex_lock(&mutex);
 
 			sem_chairs[CurrentSeat] = (long)threadID;
 			ChairsCount++;
@@ -207,6 +209,8 @@ void *Student_Activity(void *threadID)
 			//Student waits to go next.
 			sem_post(&sem_nextStudent);
 
+			sem_wait(&sem_TAsleep);
+
 			//Student left TA room
 			printf("[Student] Student %ld left TA room.\n", (long)threadID);
 		}
@@ -214,6 +218,8 @@ void *Student_Activity(void *threadID)
 		{
 			//If student didn't find any chair to sit on.
 			//Student will return at another time
+			pthread_mutex_unlock(&mutex);
+
 			printf("[Student] Student %ld didn't find any chair to sit on, and will return at another time.\n", (long)threadID);
 		}
 		//hint: use sem_wait(); sem_post(); pthread_mutex_lock(); pthread_mutex_unlock()

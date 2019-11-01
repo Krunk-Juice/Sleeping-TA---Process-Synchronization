@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
 void *TA_Activity(void* threadID)
 {
-	/*TODO*/
+	/*COMPLETE*/
 	
 	while (1)
 	{
@@ -157,7 +157,7 @@ void *TA_Activity(void* threadID)
 
 void *Student_Activity(void *threadID)
 {
-	/*TODO
+	/*COMPLETE
     
 	//Student needs help from the TA */
 	printf("[Student] Student %ld will eventually need help from the TA.\n", (long)threadID);

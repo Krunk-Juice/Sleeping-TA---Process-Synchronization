@@ -48,7 +48,7 @@ How to run the project:
 
 Team Collaborators
 
-Christopher Ta: Coding(TA.cpp), testing, documentation editing and review
+Christopher Ta: Coding(TA.cpp), Testing, How-To-Run Documentation, Documentation editing and review
 
 Gilbert Paderogo:
 

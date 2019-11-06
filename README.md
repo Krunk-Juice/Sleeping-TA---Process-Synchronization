@@ -52,6 +52,6 @@ Christopher Ta: Coding(TA.cpp), Testing, How-To-Run Documentation, Documentation
 
 Gilbert Paderogo:
 
-Bryan Cuevas:
+Bryan Cuevas: Glossary Definitions Documentation, Testing
 
-Sean Yu: Step Process Documentation (Trace)
+Sean Yu: Step Process Documentation (Trace), Testing

@@ -50,8 +50,13 @@ Team Collaborators
 
 Christopher Ta: Coding(TA.cpp), Testing, How-To-Run Documentation, Documentation editing and review
 
-Gilbert Paderogo:
+Gilbert Paderogo: Coding(TA.cpp), Testing, Data Flow Documentation
 
 Bryan Cuevas: Glossary Definitions Documentation, Testing
 
 Sean Yu: Step Process Documentation (Trace), Testing
+
+
+Test Screenshot
+
+![img](https://ibb.co/QX0d12J)

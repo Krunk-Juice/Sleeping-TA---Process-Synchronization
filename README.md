@@ -54,4 +54,4 @@ Gilbert Paderogo:
 
 Bryan Cuevas:
 
-Sean Yu:
+Sean Yu: Step Process Documentation (Trace)

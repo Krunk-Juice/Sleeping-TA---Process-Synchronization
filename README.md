@@ -57,6 +57,7 @@ Bryan Cuevas: Glossary Definitions Documentation, Testing
 Sean Yu: Step Process Documentation (Trace), Testing
 
 
-Test Screenshot
 
-![img](https://ibb.co/QX0d12J)
+Test Screenshot:
+
+[![Screen-Shot-2019-11-06-at-1-09-04-AM.png](https://i.postimg.cc/K8dJyCfM/Screen-Shot-2019-11-06-at-1-09-04-AM.png)](https://postimg.cc/18rpGCLm)

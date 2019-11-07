@@ -45,6 +45,9 @@ How to run the project:
 
     4. The (Sleeping) TA program will continue to run until you terminate the program by pressing "Ctrl + C" at the same time.
 
+Test Screenshot:
+
+[![Screen-Shot-2019-11-06-at-1-09-04-AM.png](https://i.postimg.cc/K8dJyCfM/Screen-Shot-2019-11-06-at-1-09-04-AM.png)](https://postimg.cc/18rpGCLm)
 
 Team Collaborators
 
@@ -55,9 +58,3 @@ Gilbert Paderogo: Coding(TA.cpp), Testing, Data Flow Documentation
 Bryan Cuevas: Glossary Definitions Documentation, Testing
 
 Sean Yu: Step Process Documentation (Trace), Testing
-
-
-
-Test Screenshot:
-
-[![Screen-Shot-2019-11-06-at-1-09-04-AM.png](https://i.postimg.cc/K8dJyCfM/Screen-Shot-2019-11-06-at-1-09-04-AM.png)](https://postimg.cc/18rpGCLm)

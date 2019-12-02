@@ -29,7 +29,7 @@ How to run the project:
 
     1a.  (Optional) Before you continue, look into the Sleeping-TA---Process-Synchronization directory and see if there are existing TA.o and TA.
         If those files exist in the directory, delete those files or type "make clean" in to the terminal and press ENTER.
-        If those files do not exist in the firectory, continue to step 2.
+        If those files do not exist in the directory, continue to step 2.
 
     2. Type:
 

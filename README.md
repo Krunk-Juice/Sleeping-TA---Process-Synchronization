@@ -41,7 +41,7 @@ How to run the project:
 
         ./TA
 
-        into the second terminal and press ENTER. This will run the (Sleeping) TA program.
+        into the terminal and press ENTER. This will run the (Sleeping) TA program.
 
     4. The (Sleeping) TA program will continue to run until you terminate the program by pressing "Ctrl + C" at the same time.
 

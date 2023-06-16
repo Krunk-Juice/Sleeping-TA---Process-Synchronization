@@ -51,10 +51,10 @@ Test Screenshot:
 
 Team Collaborators
 
-Christopher Ta: Coding(TA.cpp), Testing, How-To-Run Documentation, Documentation editing and review
+    Christopher Ta: Coding(TA.cpp), Testing, How-To-Run Documentation, Documentation editing and review
 
-Gilbert Paderogo: Data Flow Diagram Documentation, Testing
+    Gilbert Paderogo: Data Flow Diagram Documentation, Testing
 
-Bryan Cuevas: Glossary Definitions Documentation, Testing
+    Bryan Cuevas: Glossary Definitions Documentation, Testing
 
-Sean Yu: Step Process Documentation (Trace), Testing
+    Sean Yu: Step Process Documentation (Trace), Testing
